@@ -21,6 +21,15 @@ for f in ${WORKSPACE}/srcdir/patches/*.patch; do
   atomic_patch -p1 ${f}
 done
 
+pushd metis
+if [ $target = "x86_64-w64-mingw32" ] || [ $target = "i686-w64-mingw32" ]; then
+    atomic_patch -p1 $WORKSPACE/srcdir/metis_patches/0001-mingw-w64-does-not-have-sys-resource-h.patch
+    atomic_patch -p1 $WORKSPACE/srcdir/metis_patches/0002-mingw-w64-do-not-use-reserved-double-underscored-names.patch
+    atomic_patch -p1 $WORKSPACE/srcdir/metis_patches/0003-WIN32-Install-RUNTIME-to-bin.patch
+    atomic_patch -p1 $WORKSPACE/srcdir/metis_patches/0004-Fix-GKLIB_PATH-default-for-out-of-tree-builds.patch
+fi
+popd
+
 cd build
 cmake .. \
     -DCMAKE_INSTALL_PREFIX=${prefix} \
