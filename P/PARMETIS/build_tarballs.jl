@@ -47,7 +47,7 @@ products = [
 dependencies = [
     Dependency("METIS_jll"),
     Dependency("MPICH_jll"),
-    Dependency(PackageSpec(name="MicrosoftMPI_jll"))
+    Dependency("MicrosoftMPI_jll")
 ]
 
 # Build the tarballs.
