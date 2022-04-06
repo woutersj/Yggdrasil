@@ -36,7 +36,7 @@ make install
 """
 
 # OpenMPI and MPICH are not precompiled for Windows
-platforms = supported_platforms(; exclude=Sys.iswindows)
+platforms = supported_platforms()
 
 # The products that we will ensure are always built
 products = [
@@ -46,7 +46,8 @@ products = [
 # Dependencies that must be installed before this package can be built
 dependencies = [
     Dependency("METIS_jll"),
-    Dependency("MPICH_jll")
+    Dependency("MPICH_jll"),
+    Dependency(PackageSpec(name="MicrosoftMPI_jll"))
 ]
 
 # Build the tarballs.
