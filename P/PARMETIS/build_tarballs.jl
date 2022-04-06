@@ -46,8 +46,8 @@ products = [
 # Dependencies that must be installed before this package can be built
 dependencies = [
     Dependency("METIS_jll"),
-    Dependency("MPICH_jll"),
-    Dependency("MicrosoftMPI_jll")
+    Dependency("MPICH_jll"; platforms=filter(!Sys.iswindows, platforms)),
+    Dependency("MicrosoftMPI_jll"; platforms=filter(Sys.iswindows, platforms)),
 ]
 
 # Build the tarballs.
