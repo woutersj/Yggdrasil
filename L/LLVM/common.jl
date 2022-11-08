@@ -102,7 +102,7 @@ if [[ "${LLVM_MAJ_VER}" -gt "12" ]]; then
     ninja -j${nproc} mlir-linalg-ods-yaml-gen
 fi
 if [[ "${LLVM_MAJ_VER}" -gt "14" ]]; then
-    ninja -j${nproc} clang-tidy-confusable-chars-gen
+    ninja -j${nproc} clang-tidy-confusable-chars-gen clang-pseudo-gen mlir-pdll
 fi
 popd
 
@@ -211,6 +211,8 @@ if [[ "${LLVM_MAJ_VER}" -gt "12" ]]; then
 fi
 if [[ "${LLVM_MAJ_VER}" -gt "14" ]]; then
     CMAKE_FLAGS+=(-DCLANG_TIDY_CONFUSABLE_CHARS_GEN=${WORKSPACE}/bootstrap/bin/clang-tidy-confusable-chars-gen)
+    CMAKE_FLAGS+=(-DCLANG_PSEUDO_GEN=${WORKSPACE}/bootstrap/bin/clang-pseudo-gen)
+    CMAKE_FLAGS+=(-DMLIR_PDLL_TABLEGEN=${WORKSPACE}/bootstrap/bin/mlir-pdll)
 fi
 
 # Explicitly use our cmake toolchain file
