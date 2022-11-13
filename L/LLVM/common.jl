@@ -170,7 +170,8 @@ if [ -z "${LLVM_WANT_STATIC}" ]; then
 fi
 
 if [[ "${target}" == *linux* || "${target}" == *mingw* ]]; then
-    if [[ ${bb_full_target} == *-sanitize+memory* ]]; then;
+    if [[ ${bb_full_target} == *-sanitize+memory* ]]; then
+        echo "-Building for MSAN"
     else
         # https://bugs.llvm.org/show_bug.cgi?id=48221
         CMAKE_CXX_FLAGS+="-fno-gnu-unique"
