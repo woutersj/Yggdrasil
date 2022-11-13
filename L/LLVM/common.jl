@@ -70,6 +70,11 @@ for f in $WORKSPACE/srcdir/patches/*.patch; do
 done
 fi
 
+if [[ ${bb_full_target} == *-sanitize+memory* ]]; then
+    # Install msan runtime (for clang)
+    cp -rL ${libdir}/linux/* /opt/x86_64-linux-musl/lib/clang/*/lib/linux/
+fi
+
 # The very first thing we need to do is to build llvm-tblgen for x86_64-linux-muslc
 # This is because LLVM's cross-compile setup is kind of borked, so we just
 # build the tools natively ourselves, directly.  :/
@@ -165,8 +170,11 @@ if [ -z "${LLVM_WANT_STATIC}" ]; then
 fi
 
 if [[ "${target}" == *linux* || "${target}" == *mingw* ]]; then
-    # https://bugs.llvm.org/show_bug.cgi?id=48221
-    CMAKE_CXX_FLAGS+="-fno-gnu-unique"
+    if [[ ${bb_full_target} == *-sanitize+memory* ]]; then
+    else
+        # https://bugs.llvm.org/show_bug.cgi?id=48221
+        CMAKE_CXX_FLAGS+="-fno-gnu-unique"
+    fi
 fi
 
 # Install things into $prefix, and make sure it knows we're cross-compiling
